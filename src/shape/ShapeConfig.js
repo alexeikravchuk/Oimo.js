@@ -26,6 +26,6 @@ function ShapeConfig(){
     // bits of the collision groups with which the shape collides.
     this.collidesWith = 0xffffffff;
 
-};
+}
 
 export { ShapeConfig };
