@@ -1,21 +1,10 @@
 import { printError } from '../../core/Utils';
 
-function CollisionDetector (){
+export class CollisionDetector {
+	flip = false;
+	CollisionDetector = true;
 
-    this.flip = false;
-
-};
-
-Object.assign( CollisionDetector.prototype, {
-
-    CollisionDetector: true,
-
-    detectCollision: function ( shape1, shape2, manifold ) {
-
-        printError("CollisionDetector", "Inheritance error.");
-
-    }
-
-} );
-
-export { CollisionDetector };
+	detectCollision(shape1, shape2, manifold) {
+		printError('CollisionDetector', 'Inheritance error.');
+	}
+}

@@ -4,48 +4,31 @@ import { Vec3 } from '../../math/Vec3';
 
 /**
  * A collision detector which detects collisions between two spheres.
- * @author saharan 
+ * @author saharan
  * @author lo-th
  */
- 
-function SphereSphereCollisionDetector (){
 
-    CollisionDetector.call( this );
+export class SphereSphereCollisionDetector extends CollisionDetector {
+	n = new Vec3();
+	p = new Vec3();
 
-    this.n = new Vec3();
-    this.p = new Vec3();
+	detectCollision(shape1, shape2, manifold) {
+		const {
+			n,
+			p
+		} = this;
 
-};
+		n.sub(shape2.position, shape1.position);
+		const rad = shape1.radius + shape2.radius;
+		let len = n.lengthSq();
 
-SphereSphereCollisionDetector.prototype = Object.assign( Object.create( CollisionDetector.prototype ), {
+		if (len > 0 && len < rad * rad) {
+			len = _Math.sqrt(len);
+			n.scaleEqual(1 / len);
 
-    constructor: SphereSphereCollisionDetector,
-
-    detectCollision: function ( shape1, shape2, manifold ) {
-
-        var n = this.n;
-        var p = this.p;
-
-        var s1 = shape1;
-        var s2 = shape2;
-
-        n.sub( s2.position, s1.position );
-        var rad = s1.radius + s2.radius;
-        var len = n.lengthSq();
-        
-        if( len > 0 && len < rad * rad ){
-
-            len = _Math.sqrt( len );
-            n.scaleEqual( 1/len );
-
-            //n.normalize();
-            p.copy( s1.position ).addScaledVector( n, s1.radius );
-            manifold.addPointVec( p, n, len - rad, false );
-
-        }
-
-    }
-
-});
-
-export { SphereSphereCollisionDetector };
+			//n.normalize();
+			p.copy(shape1.position).addScaledVector(n, shape1.radius);
+			manifold.addPointVec(p, n, len - rad, false);
+		}
+	}
+}

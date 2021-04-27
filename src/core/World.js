@@ -164,7 +164,7 @@ export class World {
 
 		this.detectors[SHAPE_PLANE][SHAPE_SPHERE] = new SpherePlaneCollisionDetector(true);
 		this.detectors[SHAPE_SPHERE][SHAPE_PLANE] = new SpherePlaneCollisionDetector(false);
-
+		//
 		this.detectors[SHAPE_PLANE][SHAPE_BOX] = new BoxPlaneCollisionDetector(true);
 		this.detectors[SHAPE_BOX][SHAPE_PLANE] = new BoxPlaneCollisionDetector(false);
 
@@ -206,11 +206,7 @@ export class World {
 	}
 
 	getInfo() {
-
-		return this.isStat ?
-			   this.performance.show() :
-			   '';
-
+		return this.isStat ? this.performance.show() : '';
 	}
 
 	// Reset the world and remove all rigid bodies, shapes, joints and any object from the world.

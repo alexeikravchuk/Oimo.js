@@ -4,63 +4,48 @@ import { Vec3 } from '../../math/Vec3';
 
 /**
  * A collision detector which detects collisions between two spheres.
- * @author saharan 
+ * @author saharan
  * @author lo-th
  */
- 
-function SpherePlaneCollisionDetector ( flip ){
 
-    CollisionDetector.call( this );
+export class SpherePlaneCollisionDetector extends CollisionDetector {
+	n = new Vec3();
+	p = new Vec3();
 
-    this.flip = flip;
+	constructor(flip) {
+		super();
+		this.flip = flip;
+	}
 
-    this.n = new Vec3();
-    this.p = new Vec3();
+	detectCollision(shape1, shape2, manifold) {
+		const n = this.n;
+		const p = this.p;
 
-};
+		var s = this.flip ? shape2 : shape1;
+		var pn = this.flip ? shape1 : shape2;
+		var rad = s.radius;
+		var len;
 
-SpherePlaneCollisionDetector.prototype = Object.assign( Object.create( CollisionDetector.prototype ), {
+		n.sub(s.position, pn.position);
+		//var h = _Math.dotVectors( pn.normal, n );
 
-    constructor: SpherePlaneCollisionDetector,
+		n.x *= pn.normal.x;//+ rad;
+		n.y *= pn.normal.y;
+		n.z *= pn.normal.z;//+ rad;
 
-    detectCollision: function ( shape1, shape2, manifold ) {
+		var len = n.lengthSq();
 
-        var n = this.n;
-        var p = this.p;
+		if (len > 0 && len < rad * rad) {//&& h > rad*rad ){
+			len = _Math.sqrt(len);
+			//len = _Math.sqrt( h );
+			n.copy(pn.normal).negate();
+			//n.scaleEqual( 1/len );
 
-        var s = this.flip ? shape2 : shape1;
-        var pn = this.flip ? shape1 : shape2;
-        var rad = s.radius;
-        var len;
+			//(0, -1, 0)
 
-        n.sub( s.position, pn.position );
-        //var h = _Math.dotVectors( pn.normal, n );
-
-        n.x *= pn.normal.x//+ rad;
-        n.y *= pn.normal.y;
-        n.z *= pn.normal.z//+ rad;
-
-        
-        var len = n.lengthSq();
-        
-        if( len > 0 && len < rad * rad){//&& h > rad*rad ){
-
-            
-            len = _Math.sqrt( len );
-            //len = _Math.sqrt( h );
-            n.copy(pn.normal).negate();
-            //n.scaleEqual( 1/len );
-
-            //(0, -1, 0)
-
-            //n.normalize();
-            p.copy( s.position ).addScaledVector( n, rad );
-            manifold.addPointVec( p, n, len - rad, this.flip );
-
-        }
-
-    }
-
-});
-
-export { SpherePlaneCollisionDetector };
+			//n.normalize();
+			p.copy(s.position).addScaledVector(n, rad);
+			manifold.addPointVec(p, n, len - rad, this.flip);
+		}
+	}
+}
