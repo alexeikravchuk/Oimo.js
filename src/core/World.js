@@ -105,8 +105,8 @@ export class World {
 	 * @param {Boolean} [options.info] This is the detailed information of the performance.
 	 * @param {Boolean} [options.random] Whether the constraints randomizer is enabled or not.
 	 * @param {Array} [options.gravity] The gravity in the world.
+	 *
 	 */
-
 	constructor(options = {}) {
 		const {
 			worldscale = 1,
@@ -248,7 +248,7 @@ export class World {
 		rigidBody.setParent(this);
 		//rigidBody.awake();
 
-		for (var shape = rigidBody.shapes; shape !== null; shape = shape.next) {
+		for (let shape = rigidBody.shapes; shape !== null; shape = shape.next) {
 			this.addShape(shape);
 		}
 		if (this.rigidBodies !== null) {
@@ -466,7 +466,8 @@ export class World {
 
 
 	checkContact(name1, name2) {
-		let n1,	n2;
+		let n1,
+			n2;
 		let contact = this.contacts;
 		while (contact !== null) {
 			n1 = contact.body1.name || ' ';
@@ -488,7 +489,7 @@ export class World {
 		if (body.linearVelocity.lengthSq() > 0.04) {
 			return false;
 		}
-		return body.angularVelocity.lengthSq() <= 0.25 ;
+		return body.angularVelocity.lengthSq() <= 0.25;
 	}
 
 
@@ -720,7 +721,7 @@ export class World {
 				//or(var j=0, l=islandNumRigidBodies; j<l; j++){
 				body = this.islandRigidBodies[j];
 
-				if (body.useGravity && body.isDynamic) {
+				if (body.isDynamic) {
 					body.linearVelocity.addEqual(gVel);
 					/*body.linearVelocity.x+=gx;
 					 body.linearVelocity.y+=gy;
