@@ -9,23 +9,19 @@ import { Mat33 } from '../math/Mat33';
  * @author lo-th
  */
 
-function ShapeConfig() {
-
+export class ShapeConfig {
 	// position of the shape in parent's coordinate system.
-	this.relativePosition = new Vec3();
+	relativePosition = new Vec3();
 	// rotation matrix of the shape in parent's coordinate system.
-	this.relativeRotation = new Mat33();
+	relativeRotation = new Mat33();
 	// coefficient of friction of the shape.
-	this.friction = 0.2; // 0.4
+	friction = 0.2; // 0.4
 	// coefficient of restitution of the shape.
-	this.restitution = 0.2;
+	restitution = 0.2;
 	// density of the shape.
-	this.density = 1;
+	density = 1;
 	// bits of the collision groups to which the shape belongs.
-	this.belongsTo = 1;
+	belongsTo = 1;
 	// bits of the collision groups with which the shape collides.
-	this.collidesWith = 0xffffffff;
-
+	collidesWith = 0xffffffff;
 }
-
-export { ShapeConfig };

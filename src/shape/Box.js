@@ -1,6 +1,8 @@
-import { SHAPE_BOX, AABB_PROX } from '../constants';
+import {
+	SHAPE_BOX,
+	AABB_PROX
+} from '../constants';
 import { Shape } from './Shape';
-import { Vec3 } from '../math/Vec3';
 
 
 /**
@@ -8,47 +10,38 @@ import { Vec3 } from '../math/Vec3';
  * @author saharan
  * @author lo-th
  */
- 
-function Box ( config, Width, Height, Depth ) {
 
-    Shape.call( this, config );
+export class Box extends Shape {
+	type = SHAPE_BOX;
 
-    this.type = SHAPE_BOX;
+	dimentions = new Float32Array(18);
+	elements = new Float32Array(24);
 
-    this.width = Width;
-    this.height = Height;
-    this.depth = Depth;
+	constructor(config, width, height, depth) {
+		super(config);
+		this.width = width;
+		this.height = height;
+		this.depth = depth;
+		this.halfWidth = width * 0.5;
+		this.halfHeight = height * 0.5;
+		this.halfDepth = depth * 0.5;
+	}
 
-    this.halfWidth = Width * 0.5;
-    this.halfHeight = Height * 0.5;
-    this.halfDepth = Depth * 0.5;
-
-    this.dimentions = new Float32Array( 18 );
-    this.elements = new Float32Array( 24 );
-
-};
-
-Box.prototype = Object.assign( Object.create( Shape.prototype ), {
-
-	constructor: Box,
-
-	calculateMassInfo: function ( out ) {
-
-		var mass = this.width * this.height * this.depth * this.density;
-		var divid = 1/12;
+	calculateMassInfo(out) {
+		const mass = this.width * this.height * this.depth * this.density;
+		const divid = 1 / 12;
 		out.mass = mass;
 		out.inertia.set(
-			mass * ( this.height * this.height + this.depth * this.depth ) * divid, 0, 0,
-			0, mass * ( this.width * this.width + this.depth * this.depth ) * divid, 0,
-			0, 0, mass * ( this.width * this.width + this.height * this.height ) * divid
+			mass * (this.height * this.height + this.depth * this.depth) * divid, 0, 0,
+			0, mass * (this.width * this.width + this.depth * this.depth) * divid, 0,
+			0, 0, mass * (this.width * this.width + this.height * this.height) * divid
 		);
+	}
 
-	},
+	updateProxy() {
+		const te = this.rotation.elements;
+		const di = this.dimentions;
 
-	updateProxy: function () {
-
-		var te = this.rotation.elements;
-		var di = this.dimentions;
 		// Width
 		di[0] = te[0];
 		di[1] = te[3];
@@ -74,21 +67,21 @@ Box.prototype = Object.assign( Object.create( Shape.prototype ), {
 		di[16] = te[5] * this.halfDepth;
 		di[17] = te[8] * this.halfDepth;
 
-		var wx = di[9];
-		var wy = di[10];
-		var wz = di[11];
-		var hx = di[12];
-		var hy = di[13];
-		var hz = di[14];
-		var dx = di[15];
-		var dy = di[16];
-		var dz = di[17];
+		const wx = di[9];
+		const wy = di[10];
+		const wz = di[11];
+		const hx = di[12];
+		const hy = di[13];
+		const hz = di[14];
+		const dx = di[15];
+		const dy = di[16];
+		const dz = di[17];
 
-		var x = this.position.x;
-		var y = this.position.y;
-		var z = this.position.z;
+		const x = this.position.x;
+		const y = this.position.y;
+		const z = this.position.z;
 
-		var v = this.elements;
+		const v = this.elements;
 		//v1
 		v[0] = x + wx + hx + dx;
 		v[1] = y + wy + hy + dy;
@@ -142,9 +135,10 @@ Box.prototype = Object.assign( Object.create( Shape.prototype ), {
 			this.position.z - d - p, this.position.z + d + p
 		);
 
-		if ( this.proxy != null ) this.proxy.update();
+		if (this.proxy != null) {
+			this.proxy.update();
+		}
 
 	}
-});
+}
 
-export { Box };

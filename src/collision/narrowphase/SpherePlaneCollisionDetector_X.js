@@ -1,5 +1,4 @@
 import { CollisionDetector } from './CollisionDetector';
-import { _Math } from '../../math/Math';
 import { Vec3 } from '../../math/Vec3';
 
 /**
@@ -18,34 +17,25 @@ export class SpherePlaneCollisionDetector extends CollisionDetector {
 	}
 
 	detectCollision(shape1, shape2, manifold) {
-		const n = this.n;
-		const p = this.p;
+		const { n, p, flip } = this;
 
-		var s = this.flip ? shape2 : shape1;
-		var pn = this.flip ? shape1 : shape2;
-		var rad = s.radius;
-		var len;
+		const sphere = flip ? shape2 : shape1;
+		const plane = flip ? shape1 : shape2;
+		const rad = sphere.radius;
 
-		n.sub(s.position, pn.position);
-		//var h = _Math.dotVectors( pn.normal, n );
+		n.sub(sphere.position, plane.position);
 
-		n.x *= pn.normal.x;//+ rad;
-		n.y *= pn.normal.y;
-		n.z *= pn.normal.z;//+ rad;
+		n.x *= plane.normal.x;
+		n.y *= plane.normal.y;
+		n.z *= plane.normal.z;
 
-		var len = n.lengthSq();
+		const len = Math.sqrt(n.lengthSq());
 
-		if (len > 0 && len < rad * rad) {//&& h > rad*rad ){
-			len = _Math.sqrt(len);
-			//len = _Math.sqrt( h );
-			n.copy(pn.normal).negate();
-			//n.scaleEqual( 1/len );
+		if (len > 0 && len < rad) {
+			n.copy(plane.normal).negate();
 
-			//(0, -1, 0)
-
-			//n.normalize();
-			p.copy(s.position).addScaledVector(n, rad);
-			manifold.addPointVec(p, n, len - rad, this.flip);
+			p.copy(sphere.position).addScaledVector(n, rad);
+			manifold.addPointVec(p, n, len - rad, flip);
 		}
 	}
 }

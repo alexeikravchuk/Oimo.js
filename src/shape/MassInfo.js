@@ -6,14 +6,10 @@ import { Mat33 } from '../math/Mat33';
  * @author saharan
  */
 
-function MassInfo (){
+export class MassInfo {
+	// Mass of the shape.
+	mass = 0;
 
-    // Mass of the shape.
-    this.mass = 0;
-
-    // The moment inertia of the shape.
-    this.inertia = new Mat33();
-
-};
-
-export { MassInfo };
+	// The moment inertia of the shape.
+	inertia = new Mat33();
+}

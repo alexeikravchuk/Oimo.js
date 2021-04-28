@@ -1,4 +1,7 @@
-import { SHAPE_PLANE, AABB_PROX } from '../constants';
+import {
+	SHAPE_PLANE,
+	AABB_PROX
+} from '../constants';
 import { Shape } from './Shape';
 import { _Math } from '../math/Math';
 import { Vec3 } from '../math/Vec3';
@@ -8,53 +11,45 @@ import { Vec3 } from '../math/Vec3';
  * @author lo-th
  */
 
-function Plane( config, normal ) {
+export class Plane extends Shape {
+	type = SHAPE_PLANE;
 
-    Shape.call( this, config );
+	constructor(config, normal) {
+		super(config);
 
-    this.type = SHAPE_PLANE;
+		// radius of the shape.
+		this.normal = new Vec3(0, 1, 0);
+	}
 
-    // radius of the shape.
-    this.normal = new Vec3( 0, 1, 0 );
 
-};
+	volume() {
+		return Number.MAX_VALUE;
+	}
 
-Plane.prototype = Object.assign( Object.create( Shape.prototype ), {
+	calculateMassInfo(out) {
+		out.mass = this.density;//0.0001;
+		const inertia = 1;
+		out.inertia.set(inertia, 0, 0, 0, inertia, 0, 0, 0, inertia);
+	}
 
-    constructor: Plane,
+	updateProxy() {
+		const p = AABB_PROX;
 
-    volume: function () {
+		const min = -_Math.INF;
+		const max = _Math.INF;
+		const n = this.normal;
+		// The plane AABB is infinite, except if the normal is pointing along any axis
+		this.aabb.set(
+			n.x === -1 ? this.position.x - p : min, n.x === 1 ? this.position.x + p : max,
+			n.y === -1 ? this.position.y - p : min, n.y === 1 ? this.position.y + p : max,
+			n.z === -1 ? this.position.z - p : min, n.z === 1 ? this.position.z + p : max
+		);
 
-        return Number.MAX_VALUE;
+		if (this.proxy != null) {
+			this.proxy.update();
+		}
+	}
+}
 
-    },
 
-    calculateMassInfo: function ( out ) {
 
-        out.mass = this.density;//0.0001;
-        var inertia = 1;
-        out.inertia.set( inertia, 0, 0, 0, inertia, 0, 0, 0, inertia );
-
-    },
-
-    updateProxy: function () {
-
-        var p = AABB_PROX;
-
-        var min = -_Math.INF;
-        var max = _Math.INF;
-        var n = this.normal;
-        // The plane AABB is infinite, except if the normal is pointing along any axis
-        this.aabb.set(
-            n.x === -1 ? this.position.x - p : min, n.x === 1 ? this.position.x + p : max,
-            n.y === -1 ? this.position.y - p : min, n.y === 1 ? this.position.y + p : max,
-            n.z === -1 ? this.position.z - p : min, n.z === 1 ? this.position.z + p : max
-        );
-
-        if ( this.proxy != null ) this.proxy.update();
-
-    }
-
-});
-
-export { Plane };
