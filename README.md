@@ -48,11 +48,11 @@ Create physics world:
 world = new OIMO.World({ 
     timestep: 1 / 60, 
     iterations: 8, 
-    // broadphase: new BruteForceBroadPhase(), // SAPBroadPhase - default, DBVTBroadPhase, BruteForceBroadPhase
+    broadphase: new BruteForceBroadPhase(), // SAPBroadPhase - default, DBVTBroadPhase, BruteForceBroadPhase
     worldscale: 1, // scale full world 
     random: true,  // randomize sample
     info: false,   // calculate statistic or not
-    // gravity: [0, -10, 0] // [0, -9.8, 0] - default
+    gravity: [0, -10, 0] // [0, -9.8, 0] - default
 });
 ```
 
@@ -70,7 +70,7 @@ var body = world.add({
     restitution: 0.2,
     belongsTo: 1, // The bits of the collision groups to which the shape belongs.
     collidesWith: 0xffffffff; // The bits of the collision groups with which the shape collides.
-    // gravity: [0, -1, 0] // you can set your own gravity for the body, for example for a bullet so that it flies straight
+    gravity: [0, -1, 0] // you can set own gravity for the body, for example for a bullet so that it flies straight
 });
 
 var body = world.add({ 
