@@ -3,38 +3,38 @@
  * the physics engine.
  */
 
-export var REVISION = '1.0.9';
+export const REVISION = '1.0.9';
 
 // BroadPhase
-export var BR_NULL = 0;
-export var BR_BRUTE_FORCE = 1;
-export var BR_SWEEP_AND_PRUNE = 2;
-export var BR_BOUNDING_VOLUME_TREE = 3;
+export const BR_NULL = 0;
+export const BR_BRUTE_FORCE = 1;
+export const BR_SWEEP_AND_PRUNE = 2;
+export const BR_BOUNDING_VOLUME_TREE = 3;
 
 // Body type
-export var BODY_NULL = 0;
-export var BODY_DYNAMIC = 1;
-export var BODY_STATIC = 2;
-export var BODY_KINEMATIC = 3;
-export var BODY_GHOST = 4;
+export const BODY_NULL = 0;
+export const BODY_DYNAMIC = 1;
+export const BODY_STATIC = 2;
+export const BODY_KINEMATIC = 3;
+export const BODY_GHOST = 4;
 
 // Shape type
-export var SHAPE_NULL = 0;
-export var SHAPE_SPHERE = 1;
-export var SHAPE_BOX = 2;
-export var SHAPE_CYLINDER = 3;
-export var SHAPE_PLANE = 4;
-export var SHAPE_PARTICLE = 5;
-export var SHAPE_TETRA = 6;
+export const SHAPE_NULL = 0;
+export const SHAPE_SPHERE = 1;
+export const SHAPE_BOX = 2;
+export const SHAPE_CYLINDER = 3;
+export const SHAPE_PLANE = 4;
+export const SHAPE_PARTICLE = 5;
+export const SHAPE_TETRA = 6;
 
 // Joint type
-export var JOINT_NULL = 0;
-export var JOINT_DISTANCE = 1;
-export var JOINT_BALL_AND_SOCKET = 2;
-export var JOINT_HINGE = 3;
-export var JOINT_WHEEL = 4;
-export var JOINT_SLIDER = 5;
-export var JOINT_PRISMATIC = 6;
+export const JOINT_NULL = 0;
+export const JOINT_DISTANCE = 1;
+export const JOINT_BALL_AND_SOCKET = 2;
+export const JOINT_HINGE = 3;
+export const JOINT_WHEEL = 4;
+export const JOINT_SLIDER = 5;
+export const JOINT_PRISMATIC = 6;
 
-// AABB aproximation
-export var AABB_PROX = 0.005;
+// AABB approximation
+export const AABB_PROX = 0.005;

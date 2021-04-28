@@ -1,15 +1,9 @@
-
-
-function ImpulseDataBuffer (){
-
-    this.lp1X = NaN;
-    this.lp1Y = NaN;
-    this.lp1Z = NaN;
-    this.lp2X = NaN;
-    this.lp2Y = NaN;
-    this.lp2Z = NaN;
-    this.impulse = NaN;
-
+export class ImpulseDataBuffer {
+	lp1X = NaN;
+	lp1Y = NaN;
+	lp1Z = NaN;
+	lp2X = NaN;
+	lp2Y = NaN;
+	lp2Z = NaN;
+	impulse = NaN;
 }
-
-export { ImpulseDataBuffer };

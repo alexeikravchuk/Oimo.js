@@ -127,7 +127,7 @@ export class World {
 		this.numIterations = iterations;
 
 		this.broadPhase = broadphase;
-		// this.broadPhaseType = Btypes[2];
+		this.broadPhaseType = broadphase.constructor.name;
 
 		this.isStat = info;
 		info && (this.performance = new InfoDisplay(this));
@@ -528,6 +528,7 @@ export class World {
 			const pair = pairs[i];
 			let s1;
 			let s2;
+
 			if (pair.shape1.id < pair.shape2.id) {
 				s1 = pair.shape1;
 				s2 = pair.shape2;

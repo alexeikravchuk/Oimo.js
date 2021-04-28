@@ -1,20 +1,20 @@
 /**
-* A link list of contacts.
-* @author saharan
-*/
-function ContactLink ( contact ){
-    
+ * A link list of contacts.
+ * @author saharan
+ */
+
+export class ContactLink {
 	// The previous contact link.
-    this.prev = null;
-    // The next contact link.
-    this.next = null;
-    // The shape of the contact.
-    this.shape = null;
-    // The other rigid body.
-    this.body = null;
-    // The contact of the link.
-    this.contact = contact;
+	prev = null;
+	// The next contact link.
+	next = null;
+	// The shape of the contact.
+	shape = null;
+	// The other rigid body.
+	body = null;
 
+	constructor(contact) {
+		// The contact of the link.
+		this.contact = contact;
+	}
 }
-
-export { ContactLink };
